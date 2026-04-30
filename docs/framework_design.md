@@ -14,10 +14,11 @@ The platform layer provides reusable capabilities such as:
 - IO abstraction
 - policies and validation
 
-This document describes the first two foundational components:
+This document describes the first three foundational components:
 
 1. JobContext (execution context)
 2. Logging (observability layer)
+3. PathBuilder (standardized storage path construction)
 
 These components define the **execution contract** for all pipelines.
 
@@ -353,3 +354,42 @@ Both components are:
   - monitoring
   - auditing
   - future extensions such as metrics and alerting
+
+---
+
+## 6. Path Builder
+
+### 6.1 Purpose
+
+`PathBuilder` centralizes S3 path construction for the platform.
+
+It prevents individual jobs from hardcoding S3 paths and ensures consistent layout across domains and pipelines.
+
+### 6.2 Supported Paths
+
+The first version supports:
+
+- raw landing paths
+- Iceberg warehouse path
+- Spark event logs path
+- Athena query results path
+- monitoring output path
+
+### 6.3 Example
+
+```text
+s3://my-bucket/raw/user_events/dt=2026-04-22/
+s3://my-bucket/raw/orders/dt=2026-04-22/
+s3://my-bucket/warehouse/
+```
+
+### 6.4 Design Rationale
+
+Path conventions are part of the platform contract.
+
+Centralizing path construction makes it easier to:
+
+- support multiple domains
+- avoid duplicated path logic
+- change storage layout safely
+- keep jobs independent of infrastructure details

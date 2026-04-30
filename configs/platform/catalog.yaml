@@ -1,0 +1,39 @@
+catalog_name: glue_catalog
+
+databases:
+  bronze: bronze
+  silver: silver
+  gold: gold
+
+tables:
+  user_events.bronze:
+    layer: bronze
+    table_name: user_events_bronze
+
+  user_events.silver:
+    layer: silver
+    table_name: user_events_clean
+
+  orders.bronze:
+    layer: bronze
+    table_name: orders_bronze
+
+  orders.silver:
+    layer: silver
+    table_name: orders_clean
+
+  dau.gold:
+    layer: gold
+    table_name: dau_daily
+
+  retention.gold:
+    layer: gold
+    table_name: retention_daily
+
+  revenue.gold:
+    layer: gold
+    table_name: revenue_daily
+
+  order_conversion.gold:
+    layer: gold
+    table_name: order_conversion_daily
